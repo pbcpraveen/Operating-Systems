@@ -1,0 +1,158 @@
+Script started on Tue Feb  5 10:42:50 2019
+bash-3.2$ cp
+usage: cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file target_file
+       cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file ... target_directory
+bash-3.2$ cp file.txt file2.txt
+bash-3.2$ ls
+1a.txt		file.txt	file2.txt
+bash-3.2$ cat file2.txt
+Hello
+Exercise
+1
+a
+Study
+of
+System commands
+and
+System
+calls.
+bash-3.2$ cat file.txt
+Hello
+Exercise
+1
+a
+Study
+of
+System commands
+and
+System
+calls.
+bash-3.2$ mv file2.txt file3.txt
+bash-3.2$ ls
+1a.txt		file.txt	file3.txt
+bash-3.2$ cat file3.txt
+Hello
+Exercise
+1
+a
+Study
+of
+System commands
+and
+System
+calls.
+bash-3.2$ ls -a
+.		.DS_Store	file.txt
+..		1a.txt		file3.txt
+bash-3.2$ ls -l
+total 24
+-rw-r--r--  1 nanda  staff  680 Feb  5 10:43 1a.txt
+-rw-r--r--  1 nanda  staff   62 Feb  5 09:57 file.txt
+-rw-r--r--  1 nanda  staff   62 Feb  5 10:43 file3.txt
+bash-3.2$ ls -1
+1a.txt
+file.txt
+file3.txt
+bash-3.2$ ls -R
+1a.txt		file.txt	file3.txt
+bash-3.2$ grep
+usage: grep [-abcDEFGHhIiJLlmnOoqRSsUVvwxZ] [-A num] [-B num] [-C[num]]
+	[-e pattern] [-f file] [--binary-files=value] [--color=when]
+	[--context[=num]] [--directories=action] [--label] [--line-buffered]
+	[--null] [pattern] [file ...]
+bash-3.2$ grep Hello file.txt
+Hello
+bash-3.2$ grep -n Hello file.txt
+1:Hello
+bash-3.2$ grep -c Hello file.txt
+bash-3.2$ grep -L Hello file.txt file3.txt 1a.txt
+bash-3.2$ grep -l Hello file.txt
+file.txt
+bash-3.2$ chmod +x file3.txt
+bash-3.2$ ls
+1a.txt		file.txt	file3.txt
+bash-3.2$ ls -l 
+total 32
+-rw-r--r--@ 1 nanda  staff  1382 Feb  5 10:48 1a.txt
+-rw-r--r--  1 nanda  staff   191 Feb  5 10:51 1a2.txt
+-rw-r--r--  1 nanda  staff    62 Feb  5 09:57 file.txt
+-rwxr-xr-x  1 nanda  staff    62 Feb  5 10:43 file3.txt
+bash-3.2$ cat file.txt
+Hello
+Exercise
+1
+a
+Study
+of
+System commands
+and
+System
+calls.
+bash-3.2$ cat6[K > file.txt
+Hello
+^Dbash-3.2$ cat file.txt
+Hello
+bash-3.2$ cat >> file.txt
+Next
+^Dbash-3.2$ cat file.txt
+Hello
+Next
+bash-3.2$ mkdir directory
+bash-3.2$ ls
+1a.txt		1a2.txt		directory	file.txt	file3.txt
+bash-3.2$ mkdir
+usage: mkdir [-pv] [-m mode] directory ...
+bash-3.2$ rm directory
+rm: directory: is a directory
+bash-3.2$ rm -r directory
+bash-3.2$ ls
+1a.txt		1a2.txt		file.txt	file3.txt
+bash-3.2$ mkdir dir1
+bash-3.2$ rmdir dir1
+bash-3.2$ wc file.txt
+       2       2      11 file.txt
+bash-3.2$ wc
+usage: wc [-clmw] [file ...]
+bash-3.2$ wc -c file.txt
+      11 file.txt
+bash-3.2$ wc -l file.txt
+       2 file.txt
+bash-3.2$ wc -m file.txt
+      11 file.txt
+bash-3.2$ wc -w file.txt
+       2 file.txt
+bash-3.2$ who
+nanda    console  Dec 30 00:49 
+nanda    ttys000  Feb  5 15:17 
+bash-3.2$ who -b
+reboot   ~        Dec 30 00:49 
+bash-3.2$ who -l
+bash-3.2$ who -d
+nanda    ttys001  Jan  6 00:16 	term=0 exit=0
+nanda    ttys002  Jan  6 00:17 	term=0 exit=0
+bash-3.2$ who -u
+nanda    console  Dec 30 00:49  old  	    93
+nanda    ttys000  Feb  5 15:17   .   	 31249
+bash-3.2$ echo hello|wc
+       1       1       6
+bash-3.2$ head -1 file.txt
+Hello
+bash-3.2$ tail -1 file.txt
+Next
+bash-3.2$ nl file.txt
+     1	Hello
+     2	Next
+bash-3.2$ nl
+usage: nl [-p] [-b type] [-d delim] [-f type] [-h type] [-i incr] [-l num]
+          [-n format] [-s sep] [-v startnum] [-w width] [file]
+bash-3.2$ awk
+usage: awk [-F fs] [-v var=value] [-f progfile | 'prog'] [file ...]
+bash-3.2$ awk '/a/ {print}' file3.txt
+a
+System commands
+and
+calls.
+bash-3.2$ exit
+exit
+
+Script done on Tue Feb  5 15:31:07 2019
