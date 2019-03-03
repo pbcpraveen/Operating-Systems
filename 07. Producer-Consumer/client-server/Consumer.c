@@ -31,10 +31,10 @@ int main()
 {
     int i = 0;
     pid_t temp_pid;
-    segid = shmget (100, SIZE, IPC_EXCL | SHMPERM );
-    empty_id = shmget(101, sizeof(sem_t), IPC_EXCL | SHMPERM);
-    full_id = shmget(102, sizeof(sem_t), IPC_EXCL | SHMPERM);
-    mutex_id=shmget(103, sizeof(sem_t), IPC_EXCL | SHMPERM);
+    segid = shmget (104, SIZE, IPC_EXCL | SHMPERM );
+    empty_id = shmget(105, sizeof(sem_t), IPC_EXCL | SHMPERM);
+    full_id = shmget(106, sizeof(sem_t), IPC_EXCL | SHMPERM);
+    mutex_id=shmget(107, sizeof(sem_t), IPC_EXCL | SHMPERM);
     buff = shmat(segid, (char *)0, 0);
     empty = shmat(empty_id, (char *)0, 0);
     full = shmat(full_id, (char *)0, 0);
@@ -63,6 +63,7 @@ int main()
     shmdt(empty);
     shmdt(full);
     shmdt(mutex);
+    sleep(10);
     shmctl(segid, IPC_RMID, NULL);
     semctl(empty_id, 0, IPC_RMID, NULL);
     semctl(full_id, 0, IPC_RMID, NULL);

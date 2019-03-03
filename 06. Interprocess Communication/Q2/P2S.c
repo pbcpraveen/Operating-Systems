@@ -1,33 +1,24 @@
-#include<sys/ipc.h>
-#define NULL 0
-#include<sys/shm.h>
-#include<sys/types.h>
-#include<unistd.h>
-#include<fcntl.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<sys/wait.h>
+
+#include <sys/ipc.h>
+# define NULL 0
+#include <sys/shm.h>
+#include <sys/types.h>
+# include<unistd.h>
+# include<stdio.h>
+# include<stdlib.h>
+# include<string.h>
+#include <sys/wait.h>
+#include <stdio_ext.h>
 int main()
 {
-	char *a;
-	int fd;
-	int id = shmget(112, 50, IPC_CREAT);
-	a = shmat(id, NULL, 0);
-	while(a[0] == '\0');
-	fd = open(a, O_RDONLY);
-	a[0] = '\0';
-	if(fd < 0) {
-		strcpy(a, "Does not exist!\n");
-		shmdt(a);
-		exit(0);
-	}
-	char r; int i = 0;
-	while((read(fd, &r, 1)))
-	{
-		a[i] = r;
-		i++;
-	}
-	printf("Read!");
-	shmdt(a);
+  printf("SERVER-PROGRAM\n");
+  int pid;
+  char *a;
+  int id,n,i;
+  id=shmget(111,50,IPC_CREAT | 00666);
+   a=shmat(id,NULL,0);
+   printf("Enter the message: ");
+   scanf("%s",a);
+   shmdt(a);
+   sleep(5);  
 }

@@ -1,25 +1,26 @@
-#include<sys/ipc.h>
-#define NULL 0
-#include<sys/shm.h>
-#include<sys/types.h>
-#include<unistd.h>
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<sys/wait.h>
+
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+# include<unistd.h>
+# include<stdio.h>
+# include<stdlib.h>
+# include<string.h>
+#include <sys/wait.h>
+#include <stdio_ext.h>
 int main()
 {
-	int id;
-	char *a;
-	id = shmget(112, 50, IPC_CREAT | 00666);
-	a = shmat(id, NULL, 0);
-	a[0] = '\0';
-	printf("Enter file name: ");
-	scanf("%s", a);
-	sleep(1);
-	while(a[0] == '\0');
-	printf("%s", a);
-	shmdt(a);
-	shmctl(id, IPC_RMID, NULL);
-	return 0;
+  printf("CLIENT-PROGRAM\n");
+  int pid;
+  char *a;
+  int id,n,i;
+  id=shmget(111,50,00666);
+   a=shmat(id,0,0);
+   sleep(10);
+   for(int i = 0; a[i] != '\0'; i++)
+		a[i] -= (a[i] >= 'a' && a[i] <= 'z') ? 32 : 0;
+   printf("The uppercase version the message received is : %s\n",a);
+   shmdt(a);
+   shmctl(id, IPC_RMID,NULL);
+   sleep(4);
 }
