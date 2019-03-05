@@ -8,8 +8,11 @@
 
 ## Requirements
  - Any flavour of linux operating system like Ubuntu, Kali, etc.,( preferbly not in a virtual machine).
- - gcc intalled : to complie the C code.
-
+ - gcc intalled : to complie the C code. (this is pre-installed in most of the cases)
+ - To check the version of GCC give the following command
+ ```
+ $ gcc -v
+ ```
 ## Contents
 <b>
 1. System Commands <br>
