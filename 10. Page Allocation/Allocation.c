@@ -6,13 +6,11 @@ struct Frames
     int status;
     struct Frames * next;
 };
-
 typedef struct Frames frames;
-
 //Insert
-void insert(frames ** head,frames ** tail, int stat, int sz)
+void insert(frames **head, frames **tail, int stat, int sz)
 {
-    frames* new_node = (frames*) malloc ( sizeof(frames));
+    frames* new_node = (frames*) malloc (sizeof(frames));
     new_node->status=stat;
     new_node->size=sz;
     new_node->next=NULL;
@@ -26,9 +24,8 @@ void insert(frames ** head,frames ** tail, int stat, int sz)
         (*tail)=new_node;
     }
 }
-
 //Best-Fit
-int Best_Fit(frames **head,frames **tail, int pid, int s)
+int Best_Fit(frames **head, frames **tail, int pid, int s)
 {
     int newsize;
     frames *temp = *head;
@@ -49,7 +46,7 @@ int Best_Fit(frames **head,frames **tail, int pid, int s)
         temp=temp->next;
     }
     newsize=p->size-s;
-    if(newsize!=0)
+    if(newsize>0)
     {
         frames *newnode=(frames*)malloc(sizeof(frames));
         newnode->next=p->next;
@@ -58,7 +55,7 @@ int Best_Fit(frames **head,frames **tail, int pid, int s)
         newnode->size=newsize;
         newnode->status=-1;
     }
-    else
+    else if(newsize==0)
     {
         p->size=s;
         p->status=pid;
@@ -67,13 +64,11 @@ int Best_Fit(frames **head,frames **tail, int pid, int s)
     {
         return 0;
     }
-    else
-        return 1;
+    else return 1;
 }
-
 //Worst-Fit
-void worst_fit(frames **head,frames **tail,int pid,int size){
-    
+void worst_fit(frames **head,frames **tail,int pid,int size)
+{
     frames *temp=*(head);
     frames *p=NULL;
     while(temp!=NULL){
@@ -103,16 +98,14 @@ void worst_fit(frames **head,frames **tail,int pid,int size){
         printf("Cannot insert!\n");
     
 }
-
-
 //First-Fit
-int first_fit(frames** head,int pid, int size)
+int first_fit(frames** head, int pid, int size)
 {
     frames* temp=*head;
     int k,flag=1;
-    frames* new_node = (frames*) malloc ( sizeof(frames));
+    frames* new_node = (frames*) malloc (sizeof(frames));
     new_node->status=-1;
-    while(temp!=NULL &&  size>temp->size )
+    while(temp!=NULL &&  size>temp->size)
     {
         temp=temp->next;
     }
@@ -120,7 +113,7 @@ int first_fit(frames** head,int pid, int size)
     {
         flag=0;
     }
-    else
+    else if(size!=temp->size)
     {
         k=(temp)->size-size;
         new_node->size=k;
@@ -130,9 +123,13 @@ int first_fit(frames** head,int pid, int size)
         temp->next=new_node;
         printf("%d",temp->size);
     }
+    else if(size==temp->size)
+    {
+        temp->status=pid;
+        free(new_node);
+    }
     return flag;
 }
-
 void dealloc(frames** head,int pid)
 {
     frames* temp=*head;
@@ -152,7 +149,6 @@ void dealloc(frames** head,int pid)
     if(flag==0)
         printf("No such process was found!\n");
 }
-
 //Display
 void print_list(frames ** head)
 {
@@ -163,7 +159,6 @@ void print_list(frames ** head)
         node=node->next;
     }
 }
-
 //Coalesce
 void coalesce(frames** head)
 {
@@ -188,7 +183,6 @@ void coalesce(frames** head)
         }
     }
 }
-
 int main()
 {
     frames *free_head = NULL;
@@ -205,8 +199,8 @@ int main()
         scanf("%d",&a);
         printf("Enter end address of frame %d: ",i);
         scanf("%d",&b);
-        c=-1;
-        d= (b) - (a);
+        c = -1;
+        d = (b) - (a);
         insert(&free_head,&free_tail,c,d);
     }
     printf("FREE POOL MEMORY");
