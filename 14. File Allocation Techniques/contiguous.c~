@@ -1,0 +1,196 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct memory {
+  int block;
+  int isfree;
+  char f[50];
+};
+typedef struct memory memory;
+memory disc[100];
+int blocksize=4;
+void initialise()
+{
+  for(int i=0;i<100;i++)
+    {
+      disc[i].block=i;
+      disc[i].isfree=1;
+      strcpy(disc[i].f,"---");
+    }
+}
+
+struct element{
+  int block;
+  int size;
+  char f[50];
+  struct element *next;
+};
+typedef struct element element;
+element *table=NULL;
+void insertfile(char f[],int size,int block)
+{
+  element *newnode = (element*)malloc(sizeof(element));
+  newnode->next=0;
+  newnode->block = block;
+  newnode->size = size;
+  strcpy(newnode->f,f);
+  if (table == NULL)
+    table = newnode;
+  else
+    {
+      newnode->next = table;
+      table = newnode;
+    }
+}
+
+void deletefile(char f[])
+{
+  if(table!=NULL)
+  if(strcmp(table->f,f)==0)
+    {
+      element *temp = table;
+      table=table->next;
+      free(temp);
+    }
+  else
+    {
+      element *e;
+      for(e = table;e!=NULL&&e->next!=NULL&&strcmp(e->next->f,f);e=e->next);
+      if(e!=NULL&&e->next!=NULL&&!strcmp(e->next->f,f))
+	{
+	 element *temp1 = e->next;
+	 e->next = temp1->next;
+	 free(temp1);
+	}
+    }
+}
+void display()
+{
+  element *temp = table;
+  printf("FILE\tBLOCK\tSIZE\n");
+  while(temp!=NULL)
+    {
+      printf("%s\t%d\t%d\n",temp->f,temp->block,temp->size);
+      temp=temp->next;
+    }
+}
+int checkfree(int size)
+{
+  int ind=-1;
+  int reqblocks=size/blocksize;
+  if(size/(float)blocksize>0)
+    reqblocks++;
+  for(int i=0;i<100-reqblocks+1;)
+    {
+      if(disc[i].isfree)
+	{
+	  int flag=0;
+	  int j=i;
+	  while(1)
+	    {
+	      if(disc[i].isfree&&j<100-reqblocks+1)
+		{
+		 
+		  if(i-j+1==reqblocks)
+		    return i;
+		  j++;
+		}
+	    }
+	  i+=j;
+	}
+      else
+	i++;
+    }
+  return ind;
+}
+
+int check(int ind,int size)
+{
+  if(disc[ind].isfree)
+    {
+      for(int i=ind;i<ind+size;i++)
+        {
+	  if(!disc[i].isfree)
+	    return 0;
+	}
+    }
+  return 1;
+}
+
+int  allocate(int size,char name[])
+{
+  int flag =0;
+  if(checkfree(size)>=0)
+    {
+      while(1)
+	{
+	  int ind = rand()%100;
+	  if(check(ind,size)){
+	    
+	    flag=1;
+	    int b= size/blocksize;
+	     if(size/(float)blocksize>0)
+                  b++;
+	     for (int i=ind;i<=b+ind;i++)
+	       {
+		 disc[i].isfree=0;
+		 strcpy(disc[i].f,name);
+	       }
+	     insertfile(name,size,ind);
+	    break;
+	  }
+	}
+    }
+  return flag==0?0:1;
+}
+
+void deallocate(char f[])
+{
+  element *t  = table;
+  while(t!=NULL&&strcmp(t->f,f)) t=t->next;
+  if(t!=NULL)
+    {
+      for(int i=t->block;i<t->block+t->size;i++)
+	{
+	  disc[i].isfree= 1;
+	  strcpy(disc[i].f,"---");
+	}
+      deletefile(t->f);
+    }
+}
+
+int main()
+{
+  initialise();
+  int ch;
+  char f[50];
+  int size;
+  int block;
+  while(1)
+    {
+      printf("1.Allocate\n2.De-Allocate\n3.Display\n4.Exit\nEnter your choice: ");
+      scanf("%d",&ch);
+      if(ch==1)
+	{
+	  printf("Enter the file name: ");
+	  scanf("%s",f);
+	  printf("Enter the size of the file: ");
+	  scanf("%d",&size);
+	  allocate(size,f);
+	  
+	}
+      else if(ch==2)
+	{
+	  printf("Enter the file name of the file to be deleted : ");
+	  scanf("%s",f);
+	  deallocate(f);
+	  
+	}
+      else if(ch==3)
+	{
+	  display();
+	}
+      else
+	break;
+    }
+}

@@ -3,6 +3,7 @@
 #include<string.h>
 struct Files {
   char fname[10];
+  int reference;
 };
 typedef struct Files file;
 struct Directory {
@@ -43,6 +44,11 @@ void insert_directory(char s[])
 	    scanf("%s",d);
 	    directory* newdir = (directory*)malloc(sizeof(directory));
 	    strcpy(newdir->dname,d);
+	    newdir->d1=NULL;
+            newdir->d2=NULL;
+            newdir->d3=NULL;
+            newdir->f1=NULL;
+            newdir->f2=NULL;
 	    if(temp->d1==NULL)
 	      {
 		temp->d1=newdir;
@@ -96,6 +102,8 @@ void insert_file(char s[])
 	    scanf("%s",d);
 	    file *newfile = (file*)malloc(sizeof(file));
 	    strcpy(newfile->fname,d);
+            printf("Enter the file reference number: ");
+            scanf("%d",&(newfile->reference)); 
 	    if(temp->f1==NULL)
 	      {
 		temp->f1=newfile;
