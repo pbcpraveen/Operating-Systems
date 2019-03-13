@@ -9,14 +9,14 @@ typedef struct indexblock {
     int blockid;
     int blocks[100];
 } IndexBlock;
-IndexBlock index[100];
+IndexBlock index1[100];
 File files[100];
 int freeb[100], mem, bsize, n, nf, c, r, f;
 void print(int i)
 {
-    printf("Index block no.: %d\nBlock table:\n", index[i].blockid);
+    printf("Index block no.: %d\nBlock table:\n", index1[i].blockid);
     for(int j = 0; j < files[i].b; j++) {
-        printf("%d ", index[i].blocks[j]);
+        printf("%d ", index1[i].blocks[j]);
     }
 }
 int main()
@@ -59,7 +59,7 @@ int main()
             do {
                 r = random()%n;
             }while(freeb[r] == 1);
-            index[c].blockid = r;
+            index1[c].blockid = r;
             files[c].i = r;
             freeb[r] = 1;
             nf--;
@@ -68,7 +68,7 @@ int main()
                 if(freeb[r] == 0) {
                     freeb[r] = 1;
                     nf--;
-                    index[c].blocks[j] = r;
+                    index1[c].blocks[j] = r;
                 }
                 else j--;
             }
