@@ -63,13 +63,21 @@ int is_frame_free(int j)
 
 page* allocate(page *head,char name[],int frame)
 {
-  page *temp;
+  page *temp = head;
+  if(head!=NULL&&head->page_no==frame)
+    {
+       strcpy(head->process,name);
+       head->is_free=0;
+    }
+  else{
   while(temp!=NULL&&temp->page_no!=frame)
     {
+      
       temp=temp->next;
     }
   strcpy(temp->process,name);
   temp->is_free=0;
+  }
   return head;
 }
 
@@ -107,10 +115,9 @@ void main()
     int j=rand()%n;
     if(is_frame_free(j))
       {
-	memory=allocate(memory," ",j);
+	memory=allocate(memory,"random ",j);
       }
-    else
-      i--;	    
+    else i--;
   }
   //finding the free pages
   temp=memory;
@@ -120,6 +127,7 @@ void main()
 	{
 	  freelist=insert(freelist,temp->page_no);
 	}
+      temp=temp->next;
     }
   int ch=1;
   int ch2;
@@ -141,7 +149,7 @@ void main()
 	  printf("Enter the process size: ");
 	  scanf("%d",&size);
 	  int reqpage=size/page_size;
-	  if(((float)size/page_size-reqpage)!=0)
+	  if(size%page_size!=0)
 	    reqpage++;
 	  int g=0;
 	  if(num_free_frames>=reqpage)
@@ -161,6 +169,7 @@ void main()
 		  int d=freelist->page_no;
 		  freelist=delete(freelist);
 		  memory = allocate(memory,pname,d);
+		  g++;
 		}
 	    }
 	  else
@@ -206,9 +215,12 @@ void main()
 		{
 		  if(strcpy(temp->process,t->pname)==0)
 		    printf("%d ",temp->page_no);
+		  temp=temp->next;
 		}
 	       printf("\n");
+	       t=t->next;
 	    }
+	 
 	}
       else if(ch2==4)
 	{
@@ -216,6 +228,7 @@ void main()
 	  while(temp!=NULL)
 	    {
 	      printf("%d ",temp->page_no);
+	      temp=temp->next;
 	    }
 	  printf("\n");
 	}

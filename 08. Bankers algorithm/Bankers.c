@@ -13,6 +13,10 @@ int talloc[5][5], tneed[5][5], tavail[5], diff[5];
 int c = 0, no = 0, ncheck = 0, ch, dead = 0;
 void read()
 {
+    
+    c = 0; no = 0; ncheck = 0; dead = 0;
+    printf("No. of resources and processes: ");
+    scanf("%d %d", &M, &N);
     for(int j = 0; j < M; j++) {
         total[j] = 0;
         diff[j] = 0;
@@ -29,9 +33,6 @@ void read()
             tneed[i][j] = 0;
         }
     }
-    c = 0; no = 0; ncheck = 0; dead = 0;
-    printf("No. of resources and processes: ");
-    scanf("%d %d", &M, &N);
     for(int i = 0; i < M; i++)
     {
         printf("Total no. of resource %d: ", i+1);

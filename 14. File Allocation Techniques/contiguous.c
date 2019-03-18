@@ -22,7 +22,7 @@ void initialise()
 struct element{
   int block;
   int size;
-  char f[50];
+  char f[50];,
   struct element *next;
 };
 typedef struct element element;
@@ -65,7 +65,7 @@ int checkfree(int size)
 	{
 	  int flag=0;
 	  int j=i;
-	  while(disc[j].isfree==1)
+	  while(disc[j].isfree==1&&j<nb)
 	    {
 	      if(j-i+1==reqblocks)
 		{
